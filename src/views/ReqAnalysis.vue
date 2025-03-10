@@ -63,6 +63,12 @@
       </el-dialog>
     </div>
     <div class="get_actors" v-show="active === 1">
+      <el-button
+          type="primary"
+          @click="generateActors"
+          style="margin-bottom: 20px;">
+        自动生成角色
+      </el-button>
       <el-table :data="actors" style="width: 100%">
         <el-table-column prop="actor_name" label="角色名称"  width="180"></el-table-column>
         <el-table-column prop="function_req" label="对系统要求"  width="180"></el-table-column>
@@ -128,6 +134,13 @@
       </div>
     </div>
     <div class="usecase-description" v-show="active === 3">
+      <el-button
+          type="success"
+          @click="generateScenario"
+          style="margin: 0 0 20px 20px;"
+          icon="el-icon-data-analysis">
+        生成场景步骤
+      </el-button>
       <el-table :data="generatedUseCases" style="width: 100%">
         <el-table-column prop="title" label="用例标题" width="300"></el-table-column>
         <el-table-column prop="description" label="用例描述" width="400"></el-table-column>
@@ -296,14 +309,14 @@
           :visible.sync="contractDialogVisible"
           width="50%">
         <el-form :model="currentContract">
+          <el-form-item label="交叉引用" label-width="100px">
+            <el-input v-model="currentContract.businessRule" type="textarea"></el-input>
+          </el-form-item>
           <el-form-item label="前置条件" label-width="100px">
             <el-input v-model="currentContract.precondition" type="textarea"></el-input>
           </el-form-item>
           <el-form-item label="后置条件" label-width="100px">
             <el-input v-model="currentContract.postcondition" type="textarea"></el-input>
-          </el-form-item>
-          <el-form-item label="业务规则" label-width="100px">
-            <el-input v-model="currentContract.businessRule" type="textarea"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer">
@@ -312,6 +325,7 @@
     </span>
       </el-dialog>
     </div>
+    <el-button style="margin-top: 12px;" @click="prev">上一步</el-button>
     <el-button style="margin-top: 12px;" @click="next">下一步</el-button>
 
   </div>
@@ -483,6 +497,66 @@ export default {
     }
   },
   methods: {
+    // 生成角色方法
+    async generateActors() {
+      try {
+        // 调用API生成角色，这里用模拟数据演示
+        const mockActors = [
+          { id: 4, actor_name: '访客', function_req: '浏览公开信息' },
+          { id: 5, actor_name: '审核员', function_req: '内容审核与批准' }
+        ]
+        this.actors = [...this.actors, ...mockActors]
+        this.$message.success('成功生成2个新角色')
+      } catch (error) {
+        this.$message.error('角色生成失败: ' + error.message)
+      }
+    },
+
+    // 生成用例方法
+    async generateUseCases() {
+      if (!this.selectedReqId || !this.selectedActorId) {
+        this.$message.warning('请先选择需求项和角色')
+        return
+      }
+
+      try {
+        // 模拟API调用生成用例
+        const newUseCase = {
+          id: this.generatedUseCases.length + 1,
+          title: `智能生成用例-${Date.now().toString(36)}`,
+          description: '系统自动生成的默认用例描述',
+          preconditions: '默认前置条件',
+          expectedResult: '预期操作成功完成'
+        }
+        this.generatedUseCases.push(newUseCase)
+        this.$message.success('用例生成成功')
+      } catch (error) {
+        this.$message.error('用例生成失败: ' + error.message)
+      }
+    },
+
+    // 生成场景步骤方法
+    async generateScenario() {
+      if (!this.currentUseCase.id) {
+        this.$message.warning('请先选择或创建用例')
+        return
+      }
+
+      try {
+        // 模拟生成场景步骤
+        const mockSteps = [
+          "用户发起操作请求",
+          "系统验证权限有效性",
+          "执行核心业务逻辑",
+          "记录操作日志",
+          "返回执行结果"
+        ]
+        this.currentUseCase.mainSteps = mockSteps
+        this.$message.success('成功生成5个场景步骤')
+      } catch (error) {
+        this.$message.error('场景生成失败: ' + error.message)
+      }
+    },
     // 加载顺序图步骤
     loadSequenceSteps() {
       if (this.selectedUseCaseId) {
@@ -598,9 +672,13 @@ export default {
     next() {
       if (this.active++ > 3) {
         this.active = 0;
-        this.$router.push('/users')
+        this.$router.push('/sdesigns')
       }
-
+    },
+    prev() {
+      if (this.active > 0) {
+        this.active--;
+      }
     },
     handleAddReq() {
       this.dialogVisible = true;
@@ -662,6 +740,11 @@ export default {
 }
 </script>
 <style scoped>
+.step-controls {
+  margin-top: 20px;
+  display: flex;
+  gap: 12px;
+}
 .reqs-container {
   padding: 20px;
 }

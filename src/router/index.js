@@ -3,10 +3,11 @@ import Router from 'vue-router';
 import Layout from '@/layouts/Layout.vue';
 
 // 引入页面组件
-import Dashboard from '@/views/Dashboard';
-import Users from '@/views/Users';
-import Profile from "@/views/Profile.vue";
-import Tours from "@/views/Tours.vue";
+import Reqs from '@/views/ReqAnalysis.vue';
+import Sdesigns from '@/views/SDesign.vue';
+import Cdesigns from "@/views/CDesign.vue";
+import Waretest from "@/views/WareTest.vue";
+import Code from "@/views/CodeDesign.vue";
 
 Vue.use(Router);
 
@@ -14,27 +15,32 @@ const routes = [
     {
         path: '/',
         component: Layout,
-        redirect: '/dashboard',
+        redirect: '/reqs',
         children: [
             {
-                path: 'dashboard',
-                component: Dashboard,
-                name: 'Dashboard'
+                path: 'reqs',
+                component: Reqs,
+                name: 'reqAnalysis',
             },
             {
-                path: 'users',
-                component: Users,
-                name: 'Users'
+                path: 'sdesigns',
+                component: Sdesigns,
+                name: 'sdesigns'
             },
             {
-                path: 'tours',
-                component: Tours,
-                name: 'Tours'
+                path: 'cdesigns',
+                component: Cdesigns,
+                name: 'cdesigns'
             },
             {
-                path: 'Profile',
-                component: Profile,
-                name: 'Profile'
+                path: 'codedesigns',
+                component: Code,
+                name: 'codedesigns'
+            },
+            {
+                path: 'waretest',
+                component: Waretest,
+                name: 'waretest'
             }
             // 其他子路由
         ]

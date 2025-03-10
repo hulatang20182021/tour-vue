@@ -5,15 +5,11 @@
                background-color="#545c64"
                text-color="#fff"
                active-text-color="#ffd04b" class="el-menu-vertical">
-<!--        数据可视化分析-->
-        <el-menu-item index="/dashboard" @click="navigateTo('/dashboard')"><i class="el-icon-plus"></i>需求分析</el-menu-item>
-        <!--        用户增删改查-->
-        <el-menu-item index="/users" @click="navigateTo('/users')"><i class="el-icon-plus"></i>软件设计</el-menu-item>
-<!--        景点管理-->
-        <el-menu-item index="/tours" @click="navigateTo('/tours')"><i class="el-icon-plus"></i>代码设计</el-menu-item>
-<!--        个人设置-->
-        <el-menu-item index="/profile" @click="navigateTo('/profile')"><i class="el-icon-plus"></i>软件测试</el-menu-item>
-        <!-- 其他菜单项 -->
+        <el-menu-item index="/reqs" @click="navigateTo('/reqs')"><i class="el-icon-plus"></i>需求分析</el-menu-item>
+        <el-menu-item index="/sdesigns" @click="navigateTo('/sdesigns')"><i class="el-icon-plus"></i>概要设计</el-menu-item>
+        <el-menu-item index="/cdesigns" @click="navigateTo('/cdesigns')"><i class="el-icon-plus"></i>详细设计</el-menu-item>
+        <el-menu-item index="/codedesigns" @click="navigateTo('/codedesigns')"><i class="el-icon-plus"></i>代码设计</el-menu-item>
+        <el-menu-item index="/waretest" @click="navigateTo('/waretest')"><i class="el-icon-plus"></i>软件测试</el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
@@ -71,10 +67,6 @@ export default {
 </script>
 
 <style scoped>
-.el-menu {
-  width: 100%; /* 让菜单宽度占满父容器 */
-  border-right: none; /* 去掉右侧边框 */
-}
 .aside{
   background-color: #545c64;
 }
@@ -89,11 +81,6 @@ export default {
   border-bottom: 1px solid #ebeef5;
 }
 
-.logo {
-  font-size: 20px;
-  font-weight: bold;
-}
-
 .main {
   padding: 20px;
 }
@@ -102,27 +89,6 @@ export default {
   /*justify-content: space-between;*/
   /*align-items: center;*/
   /*width: 100%;*/
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-}
-
-.avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.username {
-  margin-right: 10px;
-}
-
-.current-path {
-  margin-right: auto;   /* 当前路径是靠左的 */
-  /*padding-left: 20px;*/
 }
 
 </style>
